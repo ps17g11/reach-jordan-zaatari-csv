@@ -1,5 +1,9 @@
 const transformActedData = require('./acted.js');
 
+function getCsvPath({ district, partner, type }) {
+  return `./data/waste-water/${type}/${partner}/district-${district}.csv`;
+}
+
 function sortId([district1, block1, number1], [district2, block2, number2]) {
   if (district1 < district2) return -1;
   if (district1 > district2) return 1;
@@ -32,6 +36,7 @@ function transformObj({ obj }) {
 }
 
 module.exports = {
+  getCsvPath,
   sort2D,
   sortErrors,
   transformActedData,

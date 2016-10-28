@@ -1,12 +1,11 @@
-const COLUMNS = require('../constants/columns.js');
 const REGEX = require('../constants/regex.js');
 const utils = require('./index.js');
 
-function getHouseId({ district, row }) {
+function getHouseId({ columns, row }) {
   const houseErrors = [];
-  const rowNo = Number(row[COLUMNS.ACTED[district].NO]);
+  const rowNo = Number(row[columns.NO]);
   if (!rowNo) return {};
-  const id1 = row[COLUMNS.ACTED[district].HOUSE.ID];
+  const id1 = row[columns.HOUSE.ID];
   const id2 = id1.replace('-HH', '-H');
   const district1 = Number(id2.match(REGEX.DISTRICT)[1]);
   const block1 = Number(id2.match(REGEX.BLOCK)[1]);
@@ -22,16 +21,16 @@ function getHouseId({ district, row }) {
   };
 }
 
-function getSepticId({ district, row }) {
+function getSepticId({ columns, row }) {
   const septicErrors = [];
-  const rowNo = Number(row[COLUMNS.ACTED[district].NO]);
+  const rowNo = Number(row[columns.NO]);
   if (!rowNo) return {};
-  const id1 = row[COLUMNS.ACTED[district].SEPTIC.ID_1];
-  const id2 = row[COLUMNS.ACTED[district].SEPTIC.ID_2];
-  const district1 = Number(row[COLUMNS.ACTED[district].SEPTIC.DISTRICT_1]);
-  const district2 = Number(row[COLUMNS.ACTED[district].SEPTIC.DISTRICT_2]);
-  const block1 = Number(row[COLUMNS.ACTED[district].SEPTIC.BLOCK_1]);
-  const block2 = Number(row[COLUMNS.ACTED[district].SEPTIC.BLOCK_2]);
+  const id1 = row[columns.SEPTIC.ID_1];
+  const id2 = row[columns.SEPTIC.ID_2];
+  const district1 = Number(row[columns.SEPTIC.DISTRICT_1]);
+  const district2 = Number(row[columns.SEPTIC.DISTRICT_2]);
+  const block1 = Number(row[columns.SEPTIC.BLOCK_1]);
+  const block2 = Number(row[columns.SEPTIC.BLOCK_2]);
   const number = Number(id2.split('-T')[1]);
   const compositeId = `D${district2}-B${block2}-T${number}`;
   const hasValidId = REGEX.SEPTIC_ID.test(id2);
@@ -64,18 +63,18 @@ function getSepticId({ district, row }) {
   };
 }
 
-module.exports = ({ data, district }) => {
+module.exports = ({ data, columns }) => {
   const errorRows = [];
   const array = [];
   const obj = {};
   for (const row of data) {
-    const { septicId, septicErrors } = getSepticId({ row, district });
-    const { houseId, houseErrors } = getHouseId({ row, district });
+    const { septicId, septicErrors } = getSepticId({ row, columns });
+    const { houseId, houseErrors } = getHouseId({ row, columns });
     if (septicErrors) errorRows.push(...septicErrors);
     if (houseErrors) errorRows.push(...houseErrors);
     if (septicId && houseId) {
-      const capacity = Number(row[COLUMNS.ACTED[district].SEPTIC.CAPACITY]);
-      const steelTank = row[COLUMNS.ACTED[district].STEEL.ID] || '';
+      const capacity = Number(row[columns.SEPTIC.CAPACITY]);
+      const steelTank = row[columns.STEEL.ID] || '';
       array.push([septicId, houseId, capacity, steelTank]);
     }
   }

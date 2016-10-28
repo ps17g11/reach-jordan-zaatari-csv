@@ -1,13 +1,46 @@
-const CONSTANTS = require('./constants/resources.js');
-const district1 = require('./acted/district-1.js');
-const district34 = require('./jen/district-3-4.js');
+const COLUMNS = require('./constants/columns.js');
+const RESOURCES = require('./constants/resources.js');
+const REGEX = require('./constants/regex.js');
+const acted = require('./scripts/acted.js');
+const jen = require('./scripts/jen.js');
 
-district1({
-  csvReadPath: CONSTANTS.ACTED.DISTRICT_1.READ,
-  csvWritePath: CONSTANTS.ACTED.DISTRICT_1.WRITE,
+// acted({
+//   columns: COLUMNS.ACTED.DISTRICT_1,
+//   district: 1,
+//   header: REGEX.FIRST_FOUR_LINES,
+// });
+
+acted({
+  columns: COLUMNS.ACTED.DISTRICT_2_9_11,
+  district: 2,
+  header: REGEX.FIRST_FOUR_LINES,
 });
 
-district34({
-  csvReadPath: CONSTANTS.JEN.DISTRICT_3_4.READ,
-  csvWritePath: CONSTANTS.JEN.DISTRICT_3_4.WRITE,
+// acted({
+//   columns: COLUMNS.ACTED.DISTRICT_2_9_11,
+//   district: 9,
+//   header: REGEX.FIRST_LINE,
+// });
+//
+// acted({
+//   columns: COLUMNS.ACTED.DISTRICT_10,
+//   district: 10,
+//   header: REGEX.FIRST_FOUR_LINES,
+// });
+//
+// acted({
+//   columns: COLUMNS.ACTED.DISTRICT_2_9_11,
+//   district: 11,
+//   header: REGEX.FIRST_FOUR_LINES,
+// });
+//
+// acted({
+//   columns: COLUMNS.ACTED.DISTRICT_12,
+//   district: 12,
+//   header: REGEX.FIRST_FOUR_LINES,
+// });
+
+jen({
+  csvReadPath: RESOURCES.JEN.DISTRICT_3_4.READ,
+  csvWritePath: RESOURCES.JEN.DISTRICT_3_4.WRITE,
 });

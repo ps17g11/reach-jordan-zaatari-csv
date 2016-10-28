@@ -1,10 +1,9 @@
 const fs = require('fs');
 const d3Dsv = require('d3-dsv');
-const COLUMNS = require('../constants/columns.js');
-const REGEX = require('../constants/regex.js');
 const utils = require('../utils/index.js');
 
-function writeFile({ csv, errorCsv, csvWritePath }) {
+function writeFile({ csv, district, errorCsv }) {
+  const csvWritePath = utils.getCsvPath({ district, partner: 'acted', type: 'output' });
   fs.writeFile(csvWritePath, csv, (err) => {
     if (err) throw err;
   });
@@ -13,26 +12,26 @@ function writeFile({ csv, errorCsv, csvWritePath }) {
   });
 }
 
-module.exports = ({ csvReadPath, csvWritePath }) => {
+module.exports = ({ columns, district, header }) => {
+  const csvReadPath = utils.getCsvPath({ district, partner: 'acted', type: 'input' });
   fs.readFile(csvReadPath, 'utf8', (err, rawText) => {
     if (err) throw err;
-    const match = rawText.match(REGEX.FIRST_FOUR_LINES);
-    const district = 1;
+    const match = rawText.match(header);
     const concatText = rawText.substring(match[0].length);
     const cleanText1 = concatText.replace(
-      COLUMNS.ACTED[district].SEPTIC.DISTRICT_2,
-      COLUMNS.ACTED[district].SEPTIC.DISTRICT_1
+      columns.SEPTIC.DISTRICT_2,
+      columns.SEPTIC.DISTRICT_1
     );
     const cleanText2 = cleanText1.replace(
-      COLUMNS.ACTED[district].STEEL.CAPACITY,
-      COLUMNS.ACTED[district].SEPTIC.CAPACITY
+      columns.STEEL.CAPACITY,
+      columns.SEPTIC.CAPACITY
     );
     const data = d3Dsv.csvParse(cleanText2);
-    const { obj, errorRows } = utils.transformActedData({ data, district });
+    const { obj, errorRows } = utils.transformActedData({ data, columns });
     const csv = utils.transformObj({ obj });
     const errorRowsSorted = errorRows.sort(utils.sortErrors);
     const errorRowsToString = errorRowsSorted.map((item) => item.join(','));
     const errorCsv = ['No.,Error Type,Value 1,Value 2', ...errorRowsToString].join('\n');
-    writeFile({ csv, errorCsv, csvWritePath });
+    writeFile({ csv, district, errorCsv });
   });
 };
