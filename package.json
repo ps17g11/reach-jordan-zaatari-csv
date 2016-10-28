@@ -1,7 +1,8 @@
 {
   "name": "jordan-zaatari-map",
   "scripts": {
-    "lint": "./node_modules/.bin/eslint ./src/"
+    "lint": "./node_modules/.bin/eslint ./src/",
+    "waste-water": "node ./src/waste-water/index.js"
   },
   "pre-commit": [
     "lint"

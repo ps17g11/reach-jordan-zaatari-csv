@@ -1,1 +1,13 @@
-# reach-jordan-zaatari-csv
+# Install
+
+Install npm dependencies
+
+```
+npm install
+```
+
+Run script
+
+```
+npm run waste-water
+```
