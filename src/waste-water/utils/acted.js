@@ -7,8 +7,8 @@ function getHouseId({ columns, row }) {
   if (!rowNo) return {};
   const id1 = row[columns.HOUSE.ID];
   const id2 = id1.replace('-HH', '-H');
-  const district1 = Number(id2.match(REGEX.DISTRICT)[1]);
-  const block1 = Number(id2.match(REGEX.BLOCK)[1]);
+  const district1 = Number((id2.match(REGEX.DISTRICT) || ['', ''])[1]);
+  const block1 = Number((id2.match(REGEX.BLOCK) || ['', ''])[1]);
   const number1 = Number(id2.split('-H')[1]) || id2.split('-H')[1];
   const hasValidId = REGEX.HOUSEHOLD_ID.test(id2);
   if (!hasValidId) {
@@ -28,9 +28,9 @@ function getSepticId({ columns, row }) {
   const id1 = row[columns.SEPTIC.ID_1];
   const id2 = row[columns.SEPTIC.ID_2];
   const district1 = Number(row[columns.SEPTIC.DISTRICT_1]);
-  const district2 = Number(row[columns.SEPTIC.DISTRICT_2]);
+  const district2 = Number(row[columns.SEPTIC.DISTRICT_2]) || district1;
   const block1 = Number(row[columns.SEPTIC.BLOCK_1]);
-  const block2 = Number(row[columns.SEPTIC.BLOCK_2]);
+  const block2 = Number(row[columns.SEPTIC.BLOCK_2]) || block1;
   const number = Number(id2.split('-T')[1]);
   const compositeId = `D${district2}-B${block2}-T${number}`;
   const hasValidId = REGEX.SEPTIC_ID.test(id2);

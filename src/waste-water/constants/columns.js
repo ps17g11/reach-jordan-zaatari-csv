@@ -24,7 +24,7 @@ module.exports = {
       SEPTIC: {
         DISTRICT_1: 'District Old',
         DISTRICT_2: 'District',
-        BLOCK_1: 'Block Old',
+        BLOCK_1: 'Block ',
         BLOCK_2: 'Block',
         ID_1: 'Code of PRC Tank (new)',
         ID_2: 'Tank # (According to  new Numbering Method)',
@@ -62,7 +62,7 @@ module.exports = {
       SEPTIC: {
         DISTRICT_1: 'District Old',
         DISTRICT_2: 'District',
-        BLOCK_1: 'Block Old',
+        BLOCK_1: 'Block ',
         BLOCK_2: 'Block',
         ID_1: 'Code of PRC Tank (new)',
         ID_2: 'Tank # (According to  new Numbering Method)',
