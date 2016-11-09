@@ -3,7 +3,7 @@ const d3Dsv = require('d3-dsv');
 const utils = require('../utils/index.js');
 
 function writeFile({ csv, district, errorCsv }) {
-  const csvWritePath = utils.getCsvPath({ district, partner: 'acted', type: 'output' });
+  const csvWritePath = utils.getCsvPath({ district, partner: 'oxfam', type: 'output' });
   fs.writeFile(csvWritePath, csv, (err) => {
     if (err) throw err;
   });
@@ -13,28 +13,13 @@ function writeFile({ csv, district, errorCsv }) {
 }
 
 module.exports = ({ columns, district, header }) => {
-  const csvReadPath = utils.getCsvPath({ district, partner: 'acted', type: 'input' });
+  const csvReadPath = utils.getCsvPath({ district, partner: 'oxfam', type: 'input' });
   fs.readFile(csvReadPath, 'utf8', (err, rawText) => {
     if (err) throw err;
     const match = rawText.match(header);
     const concatText = rawText.substring(match[0].length);
-    let cleanText = concatText;
-    cleanText = cleanText.replace(
-      columns.SEPTIC.DISTRICT_2,
-      columns.SEPTIC.DISTRICT_1
-    );
-    if (district === 10) {
-      cleanText = cleanText.replace(
-        columns.SEPTIC.BLOCK_2,
-        columns.SEPTIC.BLOCK_1
-      );
-    }
-    cleanText = cleanText.replace(
-      columns.STEEL.CAPACITY,
-      columns.SEPTIC.CAPACITY
-    );
-    const data = d3Dsv.csvParse(cleanText);
-    const { obj, errorRows } = utils.transformActedData({ data, columns });
+    const data = d3Dsv.csvParse(concatText);
+    const { obj, errorRows } = utils.transformOxfamData({ data, columns });
     const csv = utils.transformObj({ obj });
     const errorRowsSorted = errorRows.sort(utils.sortErrors);
     const errorRowsToString = errorRowsSorted.map((item) => item.join(','));

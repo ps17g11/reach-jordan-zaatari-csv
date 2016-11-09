@@ -1,4 +1,5 @@
 const transformActedData = require('./acted.js');
+const transformOxfamData = require('./oxfam.js');
 
 function getCsvPath({ district, partner, type }) {
   return `./data/waste-water/${type}/${partner}/district-${district}.csv`;
@@ -41,4 +42,5 @@ module.exports = {
   sortErrors,
   transformActedData,
   transformObj,
+  transformOxfamData,
 };

@@ -43,18 +43,18 @@ module.exports = {
       SEPTIC: {
         DISTRICT_1: 'District Old',
         DISTRICT_2: 'District',
-        BLOCK_1: 'Block-',
+        BLOCK_1: 'Block Old',
         BLOCK_2: 'Block',
-        ID_1: 'Code-of-PRC-Tank-(new)',
-        ID_2: 'Tank-#-(According-to--new-Numbering-Method)',
+        ID_1: 'CodeofPRCTank(new)',
+        ID_2: 'Tank#(AccordingtonewNumberingMethod)',
         CAPACITY: 'Septic Capacity (m3)',
       },
       HOUSE: {
         ID: 'Individuals/HH',
       },
       STEEL: {
-        ID: 'Code--of-Steel-Tank',
-        CAPACITY: 'Capacity-(m3)',
+        ID: 'CodeofSteelTank',
+        CAPACITY: 'Capacity(m3)',
       },
     },
     DISTRICT_12: {
@@ -93,6 +93,34 @@ module.exports = {
       STEEL: {
         ID: 'Code  of Steel Tank',
         CAPACITY: 'Capacity (m3)',
+      },
+    },
+  },
+  OXFAM: {
+    DISTRICT_5: {
+      SEPTIC: {
+        BLOCK: 'BL0CK',
+        NUMBER: 'T0ANK',
+        CAPACITY: 'V0LUME',
+      },
+      HOUSE: {
+        NUMBER: 'H.H C0NNECTI0N',
+      },
+      STEEL: {
+        ID: 'NO#steel tank ',
+      },
+    },
+    DISTRICT_7: {
+      SEPTIC: {
+        BLOCK: 'BL0CK',
+        NUMBER: 'TANK',
+        CAPACITY: 'V0LUME',
+      },
+      HOUSE: {
+        NUMBER: 'H.C0NNECTI0N',
+      },
+      STEEL: {
+        ID: 'NO# steel tank ',
       },
     },
   },
