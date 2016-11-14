@@ -48,10 +48,23 @@ oxfam({
 });
 
 oxfam({
-  columns: COLUMNS.ACTED.DISTRICT_7,
+  columns: COLUMNS.OXFAM.DISTRICT_6,
+  district: 6,
+  header: REGEX.FIRST_THREE_LINES,
+});
+
+oxfam({
+  columns: COLUMNS.OXFAM.DISTRICT_7,
   district: 7,
   header: REGEX.FIRST_LINE,
 });
+
+oxfam({
+  columns: COLUMNS.OXFAM.DISTRICT_8,
+  district: 8,
+  header: REGEX.FIRST_TWO_LINES,
+});
+
 
 jen({
   csvReadPath: RESOURCES.JEN.DISTRICT_3_4.READ,

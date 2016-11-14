@@ -1,38 +1,16 @@
 const REGEX = require('../constants/regex.js');
 const utils = require('./index.js');
 
-let blockGlobal = 0;
-
-function getHouseId({ columns, row }) {
-  const houseErrors = [];
-  const id1 = row[columns.HOUSE.ID];
-  if (!id1) return {};
-  const id2 = id1.replace('-HH', '-H');
-  const district1 = Number((id2.match(REGEX.DISTRICT) || ['', ''])[1]);
-  const block1 = Number((id2.match(REGEX.BLOCK) || ['', ''])[1]);
-  const number1 = Number(id2.split('-H')[1]) || id2.split('-H')[1];
-  const hasValidId = REGEX.HOUSEHOLD_ID.test(id2);
-  if (!hasValidId) {
-    const record = [rowNo, 'Invalid Household ID Format', id2, ''];
-    houseErrors.push(record);
-  }
-  return {
-    houseId: [district1, block1, number1],
-    houseErrors,
-  };
-}
-
-function getSepticId({ index, columns, row }) {
+function getSepticId({ blockGlobal, columns, district, index, row }) {
   const septicErrors = [];
   const id = row[columns.SEPTIC.NUMBER];
   if (!id) return {};
-  const district = id.match(REGEX.DISTRICT)[0];
   const blockString = row[columns.SEPTIC.BLOCK];
-  const block = Number(blockString.match(REGEX.NUMBER)[0]) || blockGlobal;
-  if (blockString) blockGlobal = block;
+  const block = blockString.match(REGEX.NUMBER) ?
+    Number(blockString.match(REGEX.NUMBER)[0]) : blockGlobal;
   const number = Number(id.split('-T')[1]);
-  const hasValidId = REGEX.SEPTIC_ID.test(id);
-  const hasBlockMatch = id.includes(`-B${block}-T`);
+  const hasValidId = REGEX.SEPTIC_ID_IRREGULARLY_PADDED.test(id);
+  const hasBlockMatch = id.includes(`B${block}-T`) || id.includes(`B0${block}-T`);
   if (!hasBlockMatch) {
     const record = [index, 'Block Mismatch', block, id];
     septicErrors.push(record);
@@ -44,21 +22,63 @@ function getSepticId({ index, columns, row }) {
   return {
     septicId: [district, block, number],
     septicErrors,
+    updatedBlockGlobal: block,
   };
 }
 
-module.exports = ({ data, columns }) => {
+function getHouseId({ blockGlobal, columns, district, index, row }) {
+  const houseErrors = [];
+  const id = row[columns.HOUSE.ID].replace(REGEX.HOUSEHOLD_ID_IRREGULAR_PADDING, '-H');
+  if (!id) return {};
+  let number = Number(id.split('-H')[1]) || id.split('-H')[1];
+  if (typeof number === 'string') number = number.toUpperCase();
+  if (!REGEX.HOUSEHOLD_NUMBER.test(number)) {
+    const record = [index, 'Invalid Household Number Format', id, ''];
+    houseErrors.push(record);
+    return {
+      houseId: null,
+      houseErrors,
+    };
+  }
+  if (!number) {
+    const record = [index, 'Invalid Household ID Format', id, ''];
+    houseErrors.push(record);
+    return {
+      houseId: null,
+      houseErrors,
+    };
+  }
+  return {
+    houseId: [district, blockGlobal, number],
+    houseErrors,
+  };
+}
+
+module.exports = ({ data, district, columns }) => {
+  let blockGlobal = 0;
+  let capacityGlobal = 0;
   const errorRows = [];
   const array = [];
   const obj = {};
   for (const [index, row] of data.entries()) {
-    const { septicId, septicErrors } = getSepticId({ index: index + 1, row, columns });
-    const { houseId, houseErrors } = getHouseId({ index: index + 1, row, columns });
+    const { septicId, septicErrors, updatedBlockGlobal,
+     } = getSepticId({ blockGlobal, columns, district, index: index + 1, row });
+    blockGlobal = updatedBlockGlobal;
+    const { houseId, houseErrors,
+      } = getHouseId({ blockGlobal, columns, district, index: index + 1, row });
     if (septicErrors) errorRows.push(...septicErrors);
     if (houseErrors) errorRows.push(...houseErrors);
     if (septicId && houseId) {
-      const capacity = Number(row[columns.SEPTIC.CAPACITY]);
-      const steelTank = row[columns.STEEL.ID] || '';
+      let capacity = Number(row[columns.SEPTIC.CAPACITY]) || capacityGlobal;
+      if (Number(row[columns.SEPTIC.CAPACITY_2M3])) capacity = 2;
+      if (Number(row[columns.SEPTIC.CAPACITY_8M3])) capacity = 8;
+      if (capacity) capacityGlobal = capacity;
+      let steelTank = REGEX.OXFAM_STEEL_TANK.test(row[columns.STEEL.ID]) ?
+        row[columns.STEEL.ID] : '';
+      if (steelTank) {
+        const parts = steelTank.split('-');
+        steelTank = `${parts[1].substring(0, 1)}ST-${district}-${Number(parts[0])}`;
+      }
       array.push([septicId, houseId, capacity, steelTank]);
     }
   }

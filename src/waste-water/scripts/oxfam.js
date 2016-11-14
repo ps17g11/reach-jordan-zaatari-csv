@@ -19,7 +19,7 @@ module.exports = ({ columns, district, header }) => {
     const match = rawText.match(header);
     const concatText = rawText.substring(match[0].length);
     const data = d3Dsv.csvParse(concatText);
-    const { obj, errorRows } = utils.transformOxfamData({ data, columns });
+    const { obj, errorRows } = utils.transformOxfamData({ columns, data, district });
     const csv = utils.transformObj({ obj });
     const errorRowsSorted = errorRows.sort(utils.sortErrors);
     const errorRowsToString = errorRowsSorted.map((item) => item.join(','));

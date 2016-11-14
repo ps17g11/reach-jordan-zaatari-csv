@@ -104,11 +104,23 @@ module.exports = {
         CAPACITY: 'V0LUME',
       },
       HOUSE: {
-        NUMBER: 'H.H C0NNECTI0N',
+        ID: 'H.H C0NNECTI0N',
       },
       STEEL: {
-        ID: 'NO#steel tank ',
+        ID: 'NO#steel tank',
       },
+    },
+    DISTRICT_6: {
+      SEPTIC: {
+        BLOCK: 'BL0CK',
+        NUMBER: 'TANK',
+        CAPACITY_2M3: '2.5m',
+        CAPACITY_8M3: '8m',
+      },
+      HOUSE: {
+        ID: 'H.C0NNECTI0N',
+      },
+      STEEL: {},
     },
     DISTRICT_7: {
       SEPTIC: {
@@ -117,11 +129,24 @@ module.exports = {
         CAPACITY: 'V0LUME',
       },
       HOUSE: {
-        NUMBER: 'H.C0NNECTI0N',
+        ID: 'H.C0NNECTI0N',
       },
       STEEL: {
         ID: 'NO# steel tank ',
       },
+    },
+    DISTRICT_8: {
+      SEPTIC: {
+        BLOCK: 'BLOCK',
+        NUMBER: 'TANK',
+        CAPACITY: 'VOLUME',
+        CAPACITY_2M3: '2.5M',
+        CAPACITY_8M3: '8M',
+      },
+      HOUSE: {
+        ID: 'H.CONNECTION',
+      },
+      STEEL: {},
     },
   },
 };
