@@ -4,16 +4,16 @@ const mappedColumns = [
   'steelTank',
   'houseHolds',
 ].join(',');
-const normalizedColumns = [
-  'septicDistrict',
-  'septicBlock',
-  'septicNumber',
-  'septicID',
-  'houseHoldDistrict',
-  'houseHoldBlock',
-  'houseHoldNumber',
-  'houseHoldID',
-].join(',');
+// const normalizedColumns = [
+//   'septicDistrict',
+//   'septicBlock',
+//   'septicNumber',
+//   'septicID',
+//   'houseHoldDistrict',
+//   'houseHoldBlock',
+//   'houseHoldNumber',
+//   'houseHoldID',
+// ].join(',');
 
 function getCsvPath({ district, partner, type }) {
   return `./data/waste-water/${type}/${partner}/district-${district}.csv`;
@@ -54,16 +54,16 @@ function mappedToCSV({ obj }) {
   return csv.join('\n');
 }
 
-function normalizedToCSV({ data }) {
-  const csv = data.map((row) => ([
-    key,
-    value.capacity,
-    value.steelTank,
-    `"${value.houseHolds.join(',')}"`,
-  ].join(',')));
-  csv.unshift(normalizedColumns);
-  return csv.join('\n');
-}
+// function normalizedToCSV({ data }) {
+//   const csv = data.map((row) => ([
+//     key,
+//     value.capacity,
+//     value.steelTank,
+//     `"${value.houseHolds.join(',')}"`,
+//   ].join(',')));
+//   csv.unshift(normalizedColumns);
+//   return csv.join('\n');
+// }
 
 module.exports = {
   getCsvPath,
