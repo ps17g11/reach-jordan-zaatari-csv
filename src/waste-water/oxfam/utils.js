@@ -1,5 +1,5 @@
 const REGEX = require('../constants/regex.js');
-const utils = require('./index.js');
+const utils = require('././index.js');
 
 function getSepticId({ blockGlobal, columns, district, index, row }) {
   const septicErrors = [];

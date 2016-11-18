@@ -2,7 +2,7 @@
   "name": "reach-jordan-zaatari-csv",
   "scripts": {
     "lint": "./node_modules/.bin/eslint ./src/",
-    "waste-water": "node ./src/waste-water/index.js",
+    "waste-water-jen": "node ./src/waste-water/jen/index.js",
     "addresses": "node ./src/addresses/index.js"
   },
   "pre-commit": [

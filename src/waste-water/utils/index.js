@@ -1,5 +1,19 @@
-const transformActedData = require('./acted.js');
-const transformOxfamData = require('./oxfam.js');
+const mappedColumns = [
+  'septicTank',
+  'capacity',
+  'steelTank',
+  'houseHolds',
+].join(',');
+const normalizedColumns = [
+  'septicDistrict',
+  'septicBlock',
+  'septicNumber',
+  'septicID',
+  'houseHoldDistrict',
+  'houseHoldBlock',
+  'houseHoldNumber',
+  'houseHoldID',
+].join(',');
 
 function getCsvPath({ district, partner, type }) {
   return `./data/waste-water/${type}/${partner}/district-${district}.csv`;
@@ -28,19 +42,32 @@ function sortErrors([a], [b]) {
   return 0;
 }
 
-function transformObj({ obj }) {
-  let csv = 'septicTank,capacity,steelTank,houseHolds\n';
-  for (const tank of Object.keys(obj)) {
-    csv += `${tank},${obj[tank].capacity},${obj[tank].steelTank},${obj[tank].houseHolds.toString()}\n`;
-  }
-  return csv;
+function mappedToCSV({ obj }) {
+  const csv = Object.entries(obj)
+    .map(([key, value]) => ([
+      key,
+      value.capacity,
+      value.steelTank,
+      `"${value.houseHolds.join(',')}"`,
+    ].join(',')));
+  csv.unshift(mappedColumns);
+  return csv.join('\n');
+}
+
+function normalizedToCSV({ data }) {
+  const csv = data.map((row) => ([
+    key,
+    value.capacity,
+    value.steelTank,
+    `"${value.houseHolds.join(',')}"`,
+  ].join(',')));
+  csv.unshift(normalizedColumns);
+  return csv.join('\n');
 }
 
 module.exports = {
   getCsvPath,
   sort2D,
   sortErrors,
-  transformActedData,
-  transformObj,
-  transformOxfamData,
+  mappedToCSV,
 };

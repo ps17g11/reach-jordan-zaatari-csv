@@ -1,6 +1,6 @@
 const fs = require('fs');
 const d3Dsv = require('d3-dsv');
-const utils = require('../utils/index.js');
+const utils = require('./index.js');
 
 function writeFile({ csv, district, errorCsv }) {
   const csvWritePath = utils.getCsvPath({ district, partner: 'acted', type: 'output' });

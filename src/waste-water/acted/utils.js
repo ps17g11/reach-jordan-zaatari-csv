@@ -1,5 +1,5 @@
 const REGEX = require('../constants/regex.js');
-const utils = require('./index.js');
+const utils = require('././index.js');
 
 function getHouseId({ columns, row }) {
   const houseErrors = [];
