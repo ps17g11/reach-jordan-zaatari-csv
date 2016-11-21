@@ -2,7 +2,7 @@
   "name": "reach-jordan-zaatari-csv",
   "scripts": {
     "test": "./node_modules/.bin/eslint ./src/",
-    "waste-water": "npm run waste-water-acted && waste-water-jen && waste-water-oxfam",
+    "waste-water": "npm run waste-water-acted && npm run waste-water-jen && npm run waste-water-oxfam",
     "waste-water-acted": "node ./src/waste-water/acted/index.js",
     "waste-water-jen": "node ./src/waste-water/jen/index.js",
     "waste-water-oxfam": "node ./src/waste-water/oxfam/index.js",
