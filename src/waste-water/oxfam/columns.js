@@ -9,7 +9,7 @@ module.exports = {
       ID: 'H.H C0NNECTI0N',
     },
     STEEL: {
-      ID: 'NO#steel tank',
+      ID: 'NO#steel tank ',
     },
   },
   DISTRICT_6: {

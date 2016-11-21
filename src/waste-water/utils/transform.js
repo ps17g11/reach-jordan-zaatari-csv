@@ -1,4 +1,3 @@
-const fs = require('fs');
 const d3Dsv = require('d3-dsv');
 const utils = require('./index.js');
 
