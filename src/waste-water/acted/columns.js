@@ -71,7 +71,7 @@ module.exports = {
       ID: 'HH number  (address)/Block',
     },
     STEEL: {
-      ID: '',
+      ID: 'Code  of Steel Tank',
       CAPACITY: 'Capacity (m3)',
     },
   },
