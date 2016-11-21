@@ -1,5 +1,6 @@
 const path = require('path');
 const fs = require('fs');
+const REGEX = require('./regex.js');
 
 const mappedColumns = [
   'septic_tank',
@@ -20,12 +21,12 @@ const normalizedColumns = [
   'steel_tank',
 ].join(',');
 
-function getReadPath({ district, io, partner }) {
-  return path.resolve(`./data/waste-water/${io}/${partner}/district-${district}.csv`);
+function getReadPath({ district, partner }) {
+  return path.resolve(`./data/waste-water/input/${partner}/district-${district}.csv`);
 }
 
-function getWritePath({ district, io, partner, type }) {
-  return path.resolve(`./data/waste-water/${io}/${partner}/${type}/district-${district}.csv`);
+function getWritePath({ district, partner, type }) {
+  return path.resolve(`./data/waste-water/output/${partner}/${type}/district-${district}.csv`);
 }
 
 function writeFile({ csv, writePath }) {
@@ -34,27 +35,38 @@ function writeFile({ csv, writePath }) {
   });
 }
 
-function sortId([district1, block1, number1], [district2, block2, number2]) {
-  if (district1 < district2) return -1;
-  if (district1 > district2) return 1;
-  if (block1 < block2) return -1;
-  if (block1 > block2) return 1;
-  if (number1 < number2) return -1;
-  if (number1 > number2) return 1;
+function sortRows(a, b) {
+  if (a.septicDistrict < b.septicDistrict) return -1;
+  if (a.septicDistrict > b.septicDistrict) return 1;
+  if (a.septicBlock < b.septicBlock) return -1;
+  if (a.septicBlock > b.septicBlock) return 1;
+  if (a.septicNumber < b.septicNumber) return -1;
+  if (a.septicNumber > b.septicNumber) return 1;
+  if (a.householdDistrict < b.householdDistrict) return -1;
+  if (a.householdDistrict > b.householdDistrict) return 1;
+  if (a.householdBlock < b.householdBlock) return -1;
+  if (a.householdBlock > b.householdBlock) return 1;
+  if (parseInt(a.householdNumber, 10) < parseInt(b.householdNumber, 10)) return -1;
+  if (parseInt(a.householdNumber, 10) > parseInt(b.householdNumber, 10)) return 1;
+  if (String(a.householdNumber) < String(b.householdNumber)) return -1;
+  if (String(a.householdNumber) > String(b.householdNumber)) return 1;
   return 0;
 }
 
-function sort2D([septicId1, houseId1], [septicId2, houseId2]) {
-  const sortOrder = sortId(septicId1, septicId2);
-  if (sortOrder !== 0) return sortOrder;
-  return sortId(houseId1, houseId2);
+function parseId({ id }) {
+  const match = id.match(REGEX.ID_PARSER);
+  if (!match) return [0, 0, 0];
+  const [, district, block, number] = match;
+  return [district, block, number];
 }
 
-function sortErrors([a], [b]) {
-  if (typeof a === 'number' && typeof b === 'number') return a - b;
-  if (String(a) < String(b)) return -1;
-  if (String(a) > String(b)) return 1;
-  return 0;
+function testData({ row, normalizedRow }) {
+  const values = Object.values(normalizedRow);
+  if (values.some((number) => Number.isNaN(number))) {
+    console.log(row);
+    console.log(normalizedRow);
+    throw new Error(row['No.']);
+  }
 }
 
 function mapRowsByTank(prevObj, row) {
@@ -77,8 +89,7 @@ function mappedToCSV({ obj }) {
       value.steelTank,
       `"${value.households.join(',')}"`,
     ].join(',')));
-  csv.unshift(mappedColumns);
-  return csv.join('\n');
+  return [mappedColumns, ...csv].join('\n');
 }
 
 function normalizedToCSV({ rows }) {
@@ -94,17 +105,17 @@ function normalizedToCSV({ rows }) {
     `D${row.householdDistrict}-B${row.householdBlock}-H${row.householdNumber}`,
     row.steelTank,
   ].join(',')));
-  csv.unshift(normalizedColumns);
-  return csv.join('\n');
+  return [normalizedColumns, ...csv].join('\n');
 }
 
 module.exports = {
   getReadPath,
   getWritePath,
   writeFile,
-  sort2D,
-  sortErrors,
+  sortRows,
   mapRowsByTank,
   mappedToCSV,
   normalizedToCSV,
+  parseId,
+  testData,
 };

@@ -1,15 +1,4 @@
 module.exports = {
   FIRST_LINE: /^.*\r?\n?/,
-  FIRST_TWO_LINES: /^(?:.*\r?\n?){2}/,
-  FIRST_THREE_LINES: /^(?:.*\r?\n?){3}/,
   FIRST_FOUR_LINES: /^(?:.*\r?\n?){4}/,
-  SEPTIC_ID: /^D[1-9][0-2]?-B[1-9][0-9]?-T[1-9][0-9]?/,
-  SEPTIC_ID_IRREGULARLY_PADDED: /^D(?:[0-9]){1,2}-B(?:[0-9]){1,2}-T(?:[0-9]){1,3}/,
-  HOUSEHOLD_ID: /^D[1-9][0-2]?-B[1-9][0-9]?-H(?:[1-9][0-9]?|[1-2][0-9][0-9])?(?:[a-f]|-[1-9])?$/,
-  HOUSEHOLD_NUMBER: /^(?:[1-9][0-9]?|[1-2][0-9][0-9])?(?:[A-F]|-[1-9])?$/,
-  DISTRICT: /^D([1-9][0-2]?)-/,
-  BLOCK: /B([1-9][0-9]?)-[HT]/,
-  NUMBER: /[0-9]+/,
-  OXFAM_STEEL_TANK: /[0-9]{1,2}-[NO]S-T/,
-  HOUSEHOLD_ID_IRREGULAR_PADDING: /-HH?\s*0*/,
 };

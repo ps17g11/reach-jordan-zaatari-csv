@@ -28,7 +28,7 @@ function getSepticId({ blockGlobal, columns, district, index, row }) {
 
 function getHouseId({ blockGlobal, columns, district, index, row }) {
   const houseErrors = [];
-  const id = row[columns.HOUSE.ID].replace(REGEX.HOUSEHOLD_ID_IRREGULAR_PADDING, '-H');
+  const id = row[columns.HOUSEHOLD.ID].replace(REGEX.HOUSEHOLD_ID_IRREGULAR_PADDING, '-H');
   if (!id) return {};
   let number = Number(id.split('-H')[1]) || id.split('-H')[1];
   if (typeof number === 'string') number = number.toUpperCase();

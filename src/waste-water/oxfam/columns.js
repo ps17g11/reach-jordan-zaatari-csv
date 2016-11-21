@@ -11,7 +11,7 @@ module.exports = {
         ID_2: 'Tank # (According to  new Numbering Method)',
         CAPACITY: 'Septic Capacity (m3)',
       },
-      HOUSE: {
+      HOUSEHOLD: {
         ID: 'HH number  (address)',
       },
       STEEL: {
@@ -30,7 +30,7 @@ module.exports = {
         ID_2: 'Tank # (According to  new Numbering Method)',
         CAPACITY: 'Septic Capacity (m3)',
       },
-      HOUSE: {
+      HOUSEHOLD: {
         ID: 'HH number  (address)',
       },
       STEEL: {
@@ -49,7 +49,7 @@ module.exports = {
         ID_2: 'Tank#(AccordingtonewNumberingMethod)',
         CAPACITY: 'Septic Capacity (m3)',
       },
-      HOUSE: {
+      HOUSEHOLD: {
         ID: 'Individuals/HH',
       },
       STEEL: {
@@ -68,7 +68,7 @@ module.exports = {
         ID_2: 'Tank # (According to  new Numbering Method)',
         CAPACITY: 'Septic Capacity (m3)',
       },
-      HOUSE: {
+      HOUSEHOLD: {
         ID: 'HH number  (address)/Block',
       },
       STEEL: {
@@ -85,7 +85,7 @@ module.exports = {
         NUMBER: 'Tank # (According to  new Numbering Method)',
         CAPACITY: 'Septic Capacity (m3)',
       },
-      HOUSE: {
+      HOUSEHOLD: {
         DISTRICT: 'HH number (district)',
         BLOCK: 'HH number (block)',
         NUMBER: 'HH number (house)',
@@ -103,7 +103,7 @@ module.exports = {
         NUMBER: 'T0ANK',
         CAPACITY: 'V0LUME',
       },
-      HOUSE: {
+      HOUSEHOLD: {
         ID: 'H.H C0NNECTI0N',
       },
       STEEL: {
@@ -117,7 +117,7 @@ module.exports = {
         CAPACITY_2M3: '2.5m',
         CAPACITY_8M3: '8m',
       },
-      HOUSE: {
+      HOUSEHOLD: {
         ID: 'H.C0NNECTI0N',
       },
       STEEL: {},
@@ -128,7 +128,7 @@ module.exports = {
         NUMBER: 'TANK',
         CAPACITY: 'V0LUME',
       },
-      HOUSE: {
+      HOUSEHOLD: {
         ID: 'H.C0NNECTI0N',
       },
       STEEL: {
@@ -143,7 +143,7 @@ module.exports = {
         CAPACITY_2M3: '2.5M',
         CAPACITY_8M3: '8M',
       },
-      HOUSE: {
+      HOUSEHOLD: {
         ID: 'H.CONNECTION',
       },
       STEEL: {},

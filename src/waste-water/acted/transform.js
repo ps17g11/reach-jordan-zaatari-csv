@@ -1,12 +1,30 @@
 const fs = require('fs');
 const d3Dsv = require('d3-dsv');
 const utils = require('../utils/index.js');
+const utilsActed = require('./utils.js');
 
-function writeFile({ csv, district }) {
-  const csvWritePath = utils.getWritePath({ district, partner: 'acted', io: 'output' });
-  fs.writeFile(csvWritePath, csv, (err) => {
-    if (err) throw err;
-  });
+function normalizeData({ data, columns }) {
+  return data
+    .filter((row) => row[columns.SEPTIC.ID] && row[columns.HOUSEHOLD.ID])
+    .map((row) => {
+      const [septicDistrict, septicBlock, septicNumber] = utils.parseId({
+        id: row[columns.SEPTIC.ID] });
+      const [householdDistrict, householdBlock, householdNumber] = utils.parseId({
+        id: row[columns.HOUSEHOLD.ID] });
+      const normalizedRow = {
+        septicDistrict: Number(septicDistrict),
+        septicBlock: Number(septicBlock),
+        septicNumber: Number(septicNumber),
+        septicCapacity: Number(row[columns.SEPTIC.CAPACITY]),
+        householdDistrict: Number(householdDistrict),
+        householdBlock: Number(householdBlock),
+        householdNumber: Number(householdNumber) || householdNumber,
+        steelTank: utilsActed.parseSteelTank({ tankId: row[columns.STEEL.ID] }),
+      };
+      utils.testData({ row, normalizedRow });
+      return normalizedRow;
+    })
+    .sort(utils.sortRows);
 }
 
 module.exports = ({ columns, district, header }) => {
@@ -15,27 +33,17 @@ module.exports = ({ columns, district, header }) => {
     if (err) throw err;
     const match = rawText.match(header);
     const concatText = rawText.substring(match[0].length);
-    let cleanText = concatText;
-    cleanText = cleanText.replace(
-      columns.SEPTIC.DISTRICT_2,
-      columns.SEPTIC.DISTRICT_1
-    );
-    if (district === 10) {
-      cleanText = cleanText.replace(
-        columns.SEPTIC.BLOCK_2,
-        columns.SEPTIC.BLOCK_1
-      );
-    }
-    cleanText = cleanText.replace(
-      columns.STEEL.CAPACITY,
-      columns.SEPTIC.CAPACITY
-    );
+    const cleanText = utilsActed.replaceHeaders({ columns, district, text: concatText });
     const data = d3Dsv.csvParse(cleanText);
-    const { obj, errorRows } = utils.transformActedData({ data, columns });
-    const csv = utils.transformObj({ obj });
-    const errorRowsSorted = errorRows.sort(utils.sortErrors);
-    const errorRowsToString = errorRowsSorted.map((item) => item.join(','));
-    const errorCsv = ['No.,Error Type,Value 1,Value 2', ...errorRowsToString].join('\n');
-    writeFile({ csv, district, errorCsv });
+    const normalizedData = normalizeData({ columns, data });
+    const normalizedCSV = utils.normalizedToCSV({ rows: normalizedData });
+    const mappedObj = normalizedData.reduce(utils.mapRowsByTank, {});
+    const mappedCSV = utils.mappedToCSV({ obj: mappedObj });
+    const writePathNormalized = utils.getWritePath({
+      district, partner: 'acted', type: 'normalized' });
+    const writePathMapped = utils.getWritePath({
+      district, partner: 'acted', type: 'mapped' });
+    utils.writeFile({ csv: normalizedCSV, writePath: writePathNormalized });
+    utils.writeFile({ csv: mappedCSV, writePath: writePathMapped });
   });
 };

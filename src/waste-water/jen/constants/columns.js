@@ -6,7 +6,7 @@ module.exports = {
       NUMBER: 'Tank # (According to  new Numbering Method)',
       CAPACITY: 'Septic Capacity (m3)',
     },
-    HOUSE: {
+    HOUSEHOLD: {
       DISTRICT: 'HH number (district)',
       BLOCK: 'HH number (block)',
       NUMBER: 'HH number (house)',
