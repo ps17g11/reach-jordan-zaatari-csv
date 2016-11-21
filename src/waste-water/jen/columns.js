@@ -3,13 +3,13 @@ module.exports = {
     SEPTIC: {
       DISTRICT: 'District',
       BLOCK: 'Block',
-      NUMBER: 'Tank # (According to  new Numbering Method)',
+      ID: 'Tank # (According to  new Numbering Method)',
       CAPACITY: 'Septic Capacity (m3)',
     },
     HOUSEHOLD: {
       DISTRICT: 'HH number (district)',
       BLOCK: 'HH number (block)',
-      NUMBER: 'HH number (house)',
+      ID: 'HH number (house)',
     },
     STEEL: {
       ID: 'Code  of Steel Tank',

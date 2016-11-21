@@ -1,27 +1,39 @@
-const COLUMNS = require('./constants/columns.js');
-const REGEX = require('./constants/regex.js');
-const oxfam = require('./scripts/oxfam.js');
+const COLUMNS = require('./columns.js');
+const transform = require('../utils/transform.js');
+const partnerUtils = require('./utils.js');
 
-oxfam({
-  columns: COLUMNS.OXFAM.DISTRICT_5,
+const FIRST_LINE = /^.*\r?\n?/;
+const FIRST_TWO_LINES = /^(?:.*\r?\n?){2}/;
+const FIRST_THREE_LINES = /^(?:.*\r?\n?){3}/;
+
+transform({
+  columns: COLUMNS.DISTRICT_5,
   district: 5,
-  header: REGEX.FIRST_LINE,
+  header: FIRST_LINE,
+  partner: 'oxfam',
+  partnerUtils,
 });
 
-oxfam({
-  columns: COLUMNS.OXFAM.DISTRICT_6,
+transform({
+  columns: COLUMNS.DISTRICT_6,
   district: 6,
-  header: REGEX.FIRST_THREE_LINES,
+  header: FIRST_THREE_LINES,
+  partner: 'oxfam',
+  partnerUtils,
 });
 
-oxfam({
-  columns: COLUMNS.OXFAM.DISTRICT_7,
+transform({
+  columns: COLUMNS.DISTRICT_7,
   district: 7,
-  header: REGEX.FIRST_LINE,
+  header: FIRST_LINE,
+  partner: 'oxfam',
+  partnerUtils,
 });
 
-oxfam({
-  columns: COLUMNS.OXFAM.DISTRICT_8,
+transform({
+  columns: COLUMNS.DISTRICT_8,
   district: 8,
-  header: REGEX.FIRST_TWO_LINES,
+  header: FIRST_TWO_LINES,
+  partner: 'oxfam',
+  partnerUtils,
 });

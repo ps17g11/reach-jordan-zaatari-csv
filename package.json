@@ -4,6 +4,7 @@
     "test": "./node_modules/.bin/eslint ./src/",
     "waste-water-acted": "node ./src/waste-water/acted/index.js",
     "waste-water-jen": "node ./src/waste-water/jen/index.js",
+    "waste-water-oxfam": "node ./src/waste-water/oxfam/index.js",
     "addresses": "node ./src/addresses/index.js"
   },
   "devDependencies": {

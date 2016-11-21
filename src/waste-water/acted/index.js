@@ -1,39 +1,54 @@
-const COLUMNS = require('./constants/columns.js');
-const REGEX = require('./constants/regex.js');
-const acted = require('./transform.js');
+const COLUMNS = require('./columns.js');
+const transform = require('../utils/transform.js');
+const partnerUtils = require('./utils.js');
 
-acted({
+const FIRST_LINE = /^.*\r?\n?/;
+const FIRST_FOUR_LINES = /^(?:.*\r?\n?){4}/;
+
+transform({
   columns: COLUMNS.DISTRICT_1,
   district: 1,
-  header: REGEX.FIRST_FOUR_LINES,
+  header: FIRST_FOUR_LINES,
+  partner: 'acted',
+  partnerUtils,
 });
 
-acted({
+transform({
   columns: COLUMNS.DISTRICT_2_9_11,
   district: 2,
-  header: REGEX.FIRST_FOUR_LINES,
+  header: FIRST_FOUR_LINES,
+  partner: 'acted',
+  partnerUtils,
 });
 
-acted({
+transform({
   columns: COLUMNS.DISTRICT_2_9_11,
   district: 9,
-  header: REGEX.FIRST_LINE,
+  header: FIRST_LINE,
+  partner: 'acted',
+  partnerUtils,
 });
 
-acted({
+transform({
   columns: COLUMNS.DISTRICT_10,
   district: 10,
-  header: REGEX.FIRST_FOUR_LINES,
+  header: FIRST_FOUR_LINES,
+  partner: 'acted',
+  partnerUtils,
 });
 
-acted({
+transform({
   columns: COLUMNS.DISTRICT_2_9_11,
   district: 11,
-  header: REGEX.FIRST_FOUR_LINES,
+  header: FIRST_FOUR_LINES,
+  partner: 'acted',
+  partnerUtils,
 });
 
-acted({
+transform({
   columns: COLUMNS.DISTRICT_12,
   district: 12,
-  header: REGEX.FIRST_FOUR_LINES,
+  header: FIRST_FOUR_LINES,
+  partner: 'acted',
+  partnerUtils,
 });

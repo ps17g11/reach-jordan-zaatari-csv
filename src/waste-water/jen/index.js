@@ -1,9 +1,13 @@
-const COLUMNS = require('./constants/columns.js');
-const REGEX = require('./constants/regex.js');
-const transform = require('./transform.js');
+const COLUMNS = require('./columns.js');
+const transform = require('../utils/transform.js');
+const partnerUtils = require('./utils.js');
+
+const FIRST_FOUR_LINES = /^(?:.*\r?\n?){4}/;
 
 transform({
   columns: COLUMNS.DISTRICT_3_4,
   district: '3-4',
-  header: REGEX.FIRST_FOUR_LINES,
+  header: FIRST_FOUR_LINES,
+  partner: 'jen',
+  partnerUtils,
 });
