@@ -1,6 +1,6 @@
 const COLUMNS = require('./constants/columns.js');
 const REGEX = require('./constants/regex.js');
-const acted = require('./scripts/acted.js');
+const acted = require('./transform.js');
 
 acted({
   columns: COLUMNS.ACTED.DISTRICT_1,

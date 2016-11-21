@@ -1,3 +1,6 @@
+const path = require('path');
+const fs = require('fs');
+
 const mappedColumns = [
   'septic_tank',
   'capacity',
@@ -17,8 +20,18 @@ const normalizedColumns = [
   'steel_tank',
 ].join(',');
 
-function getCsvPath({ district, partner, type }) {
-  return `./data/waste-water/${type}/${partner}/district-${district}.csv`;
+function getReadPath({ district, io, partner }) {
+  return path.resolve(`./data/waste-water/${io}/${partner}/district-${district}.csv`);
+}
+
+function getWritePath({ district, io, partner, type }) {
+  return path.resolve(`./data/waste-water/${io}/${partner}/${type}/district-${district}.csv`);
+}
+
+function writeFile({ csv, writePath }) {
+  fs.writeFile(writePath, csv, (err) => {
+    if (err) throw err;
+  });
 }
 
 function sortId([district1, block1, number1], [district2, block2, number2]) {
@@ -86,7 +99,9 @@ function normalizedToCSV({ rows }) {
 }
 
 module.exports = {
-  getCsvPath,
+  getReadPath,
+  getWritePath,
+  writeFile,
   sort2D,
   sortErrors,
   mapRowsByTank,

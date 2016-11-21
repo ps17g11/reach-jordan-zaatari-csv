@@ -1,19 +1,16 @@
 const fs = require('fs');
 const d3Dsv = require('d3-dsv');
-const utils = require('./index.js');
+const utils = require('../utils/index.js');
 
-function writeFile({ csv, district, errorCsv }) {
-  const csvWritePath = utils.getCsvPath({ district, partner: 'acted', type: 'output' });
+function writeFile({ csv, district }) {
+  const csvWritePath = utils.getWritePath({ district, partner: 'acted', io: 'output' });
   fs.writeFile(csvWritePath, csv, (err) => {
-    if (err) throw err;
-  });
-  fs.writeFile(`${csvWritePath.slice(0, -4)}-errors.csv`, errorCsv, (err) => {
     if (err) throw err;
   });
 }
 
 module.exports = ({ columns, district, header }) => {
-  const csvReadPath = utils.getCsvPath({ district, partner: 'acted', type: 'input' });
+  const csvReadPath = utils.getReadPath({ district, io: 'input', partner: 'acted' });
   fs.readFile(csvReadPath, 'utf8', (err, rawText) => {
     if (err) throw err;
     const match = rawText.match(header);
