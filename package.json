@@ -1,12 +1,13 @@
 {
   "name": "reach-jordan-zaatari-csv",
   "scripts": {
+    "addresses": "node ./src/addresses/index.js",
+    "syria-routes": "node ./src/syria-routes/index.js",
     "test": "./node_modules/.bin/eslint ./src/",
     "waste-water": "npm run waste-water-acted && npm run waste-water-jen && npm run waste-water-oxfam",
     "waste-water-acted": "node ./src/waste-water/acted/index.js",
     "waste-water-jen": "node ./src/waste-water/jen/index.js",
-    "waste-water-oxfam": "node ./src/waste-water/oxfam/index.js",
-    "addresses": "node ./src/addresses/index.js"
+    "waste-water-oxfam": "node ./src/waste-water/oxfam/index.js"
   },
   "devDependencies": {
     "babel-eslint": "^7.1.1",

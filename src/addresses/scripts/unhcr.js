@@ -14,7 +14,7 @@ function transformData({ data }) {
   for (const row of data) {
     const caseIds = row[COLUMNS.CASE_ID];
     if (caseIds && caseIds.toLowerCase() !== 'unoccupied') {
-      const caseIdArray = caseIds.split(/[,;.'P\s\\\/]+/);
+      const caseIdArray = caseIds.split(/[,;.'P\s\\/]+/);
       for (const caseIdRaw of caseIdArray) {
         if (caseIdRaw && caseIdRaw.length < 24) {
           const caseId = caseIdRaw.toUpperCase();
