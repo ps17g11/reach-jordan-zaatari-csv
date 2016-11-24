@@ -41,4 +41,27 @@ module.exports = {
       LEG_5: 'R3_L5',
     },
   ],
+  ROUTES_SEPARATE_FILES: [
+    {
+      LEG_1: 'R1_L1',
+      LEG_2: 'R1_L2',
+      LEG_3: 'R1_L3',
+      LEG_4: 'R1_L4',
+      LEG_5: '',
+    },
+    {
+      LEG_1: 'R2_L1',
+      LEG_2: 'R2_L2',
+      LEG_3: 'R2_L3',
+      LEG_4: 'R2_L4',
+      LEG_5: '',
+    },
+    {
+      LEG_1: 'R3_L1',
+      LEG_2: 'R3_L2',
+      LEG_3: 'R3_L3',
+      LEG_4: 'R3_L4',
+      LEG_5: 'R3_L5',
+    },
+  ],
 };

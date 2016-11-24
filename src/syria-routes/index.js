@@ -27,7 +27,27 @@ function mapRows(row) {
     .join('\n');
 }
 
+function writeRouteToFile(row) {
+  const FGD = row[COLUMNS.HEADERS.FOCUS_GROUP];
+  COLUMNS.ROUTES_SEPARATE_FILES.forEach((route, index) => {
+    const fileName = `FGD_${FGD}_R${index + 1}`;
+    const routePart = Object.values(route)
+      .filter((attribute) => row[attribute])
+      .map((attribute, order) => (
+        [order + 1, row[attribute] || ''].join(',')
+      ));
+    const fileContent = [`Order,${fileName}`, ...routePart].join('\n');
+    if (fileContent.length > 20) {
+      fs.writeFile(
+        `./data/syria-routes/output/multi-part/${fileName}.csv`, fileContent, (err) => {
+          if (err) throw err;
+        });
+    }
+  });
+}
+
 const csvData = data.map(mapRows).join('\n');
+data.forEach(writeRouteToFile);
 
 const headers = Object.values(COLUMNS.HEADERS).join(',');
 const newCsv = `Route,${headers}\n${csvData}`;
