@@ -1,10 +1,18 @@
-const fs = require('fs');
+const fs = require('fs-extra');
 const d3Dsv = require('d3-dsv');
 const XLSX = require('xlsx');
 const COLUMNS = require('./columns.js');
 
 const inputPath = './data/syria-routes/input/input.xlsx';
-const outputPath = './data/syria-routes/output/output.csv';
+const outputPath = './data/syria-routes/output';
+const outputPathMultiPart = `${outputPath}/multi-part`;
+const readmeText = '# Output files written to this directory\n';
+
+fs.removeSync(outputPath);
+fs.mkdirsSync(outputPath);
+fs.writeFileSync(`${outputPath}/README.md`, readmeText);
+fs.mkdirsSync(outputPathMultiPart);
+fs.writeFileSync(`${outputPathMultiPart}/README.md`, readmeText);
 
 const workbook = XLSX.readFile(inputPath);
 const [sheet1] = workbook.SheetNames;
@@ -38,8 +46,9 @@ function writeRouteToFile(row) {
       ));
     const fileContent = [`Order,${fileName}`, ...routePart].join('\n');
     if (fileContent.length > 20) {
+
       fs.writeFile(
-        `./data/syria-routes/output/multi-part/${fileName}.csv`, fileContent, (err) => {
+        `${outputPathMultiPart}/${fileName}.csv`, fileContent, (err) => {
           if (err) throw err;
         });
     }
@@ -52,6 +61,6 @@ data.forEach(writeRouteToFile);
 const headers = Object.values(COLUMNS.HEADERS).join(',');
 const newCsv = `Route,${headers}\n${csvData}`;
 
-fs.writeFile(outputPath, newCsv, (err) => {
+fs.writeFile(`${outputPath}/output.csv`, newCsv, (err) => {
   if (err) throw err;
 });
